@@ -1,0 +1,12 @@
+image:
+  repository: nginx
+  tag: latest
+  pullPolicy: IfNotPresent
+
+persistence:
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 5Gi
+  storageClass: ""   # leave empty to use default
+  mountPath: /usr/share/nginx/html
