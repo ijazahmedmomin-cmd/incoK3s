@@ -1,0 +1,16 @@
+env:
+  name: staging
+  debug: false
+  logLevel: INFO
+  externalEndpoint: "https://staging.company.com/api"
+  clientId: "staging_client"
+  cacheTTL: 600
+  prefix: "staging"
+
+indexHtml: |
+  <html>
+    <head><title>Staging Environment</title></head>
+    <body>
+      <h1>Welcome to Staging</h1>
+    </body>
+  </html>
