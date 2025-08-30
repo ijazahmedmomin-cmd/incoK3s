@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nginx.fullname" . }}
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: {{ include "nginx.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "nginx.name" . }}
+    spec:
+      containers:
+        - name: nginx
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: nginx-storage
+              mountPath: {{ .Values.persistence.mountPath }}
+      volumes:
+        - name: nginx-storage
+          persistentVolumeClaim:
+            claimName: {{ include "nginx.fullname" . }}-pvc
