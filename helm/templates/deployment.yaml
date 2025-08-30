@@ -2,24 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "nginx-env.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "nginx-env.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "nginx-env.name" . }}
+      app.kubernetes.io/name: {{ include "nginx-env.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ include "nginx-env.name" . }}
+        app.kubernetes.io/name: {{ include "nginx-env.fullname" . }}
     spec:
       containers:
       - name: nginx
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.targetPort }}
         volumeMounts:
-        - name: html
-          mountPath: /usr/share/nginx/html
+        - name: index-volume
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
       volumes:
-      - name: html
+      - name: index-volume
         configMap:
           name: {{ include "nginx-env.fullname" . }}-index
