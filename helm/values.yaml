@@ -1,0 +1,26 @@
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+  protocol: TCP
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+envConfig:
+  environment: "default"
+  debug: false
+  logLevel: "INFO"
+  externalEndpoint: "https://example.com/api"
+  clientIdentifier: "default_client"
+  cacheTTL: 300
+  instancePrefix: "default"
