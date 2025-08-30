@@ -1,0 +1,31 @@
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: alpine
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8080
+
+env:
+  name: development
+  debug: true
+  logLevel: DEBUG
+  externalEndpoint: "https://dev.company.com/api"
+  clientId: "dev_client"
+  cacheTTL: 300
+  prefix: "dev"
+
+indexHtml: |
+  <html>
+    <head><title>{{ .Values.env.name | title }} Environment</title></head>
+    <body>
+      <h1>Welcome to {{ .Values.env.name | title }}</h1>
+      <p>Debug: {{ .Values.env.debug }}</p>
+      <p>Log Level: {{ .Values.env.logLevel }}</p>
+      <p>Endpoint: {{ .Values.env.externalEndpoint }}</p>
+      <p>Client: {{ .Values.env.clientId }}</p>
+    </body>
+  </html>
