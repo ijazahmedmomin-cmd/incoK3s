@@ -2,6 +2,18 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "nginx-env.fullname" . }}-index
+  namespace: {{ .Release.Namespace }}
 data:
   index.html: |
-{{ .Values.indexHtml | indent 4 }}
+    <html>
+    <head><title>{{ .Values.envConfig.environment }} site</title></head>
+    <body>
+      <h1>Environment: {{ .Values.envConfig.environment }}</h1>
+      <p>Debug: {{ .Values.envConfig.debug }}</p>
+      <p>Log Level: {{ .Values.envConfig.logLevel }}</p>
+      <p>External Endpoint: {{ .Values.envConfig.externalEndpoint }}</p>
+      <p>Client ID: {{ .Values.envConfig.clientIdentifier }}</p>
+      <p>Cache TTL: {{ .Values.envConfig.cacheTTL }}</p>
+      <p>Instance Prefix: {{ .Values.envConfig.instancePrefix }}</p>
+    </body>
+    </html>
