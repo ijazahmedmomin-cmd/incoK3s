@@ -1,0 +1,29 @@
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: alpine
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8080
+  targetPort: 80
+  nodePort: 32080
+  protocol: TCP
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  storageClass: ""
+
+env:
+  name: development
+  debug: true
+  logLevel: DEBUG
+  externalEndpoint: "https://dev.company.com/api"
+  clientId: "dev_client"
+  cacheTTL: 300
+  prefix: "dev"
+

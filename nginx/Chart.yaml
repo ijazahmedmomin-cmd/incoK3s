@@ -1,0 +1,7 @@
+apiVersion: v2
+name: nginx
+description: Nginx with env-specific index.html persisted on PVC
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+
