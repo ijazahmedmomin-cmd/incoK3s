@@ -38,6 +38,21 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
           - containerPort: {{ .Values.service.targetPort }}
+        env:
+            - name: ENVIRONMENT
+              value: "{{ .Values.env.name }}"
+            - name: DEBUG_MODE
+              value: "{{ .Values.env.debug }}"
+            - name: LOG_LEVEL
+              value: "{{ .Values.env.logLevel }}"
+            - name: EXTERNAL_ENDPOINT
+              value: "{{ .Values.env.externalEndpoint }}"
+            - name: CLIENT_ID
+              value: "{{ .Values.env.clientId }}"
+            - name: CACHE_TTL
+              value: "{{ .Values.env.cacheTTL }}"
+            - name: INSTANCE_PREFIX
+              value: "{{ .Values.env.instancePrefix }}"
         volumeMounts:
           - name: html-volume
             mountPath: /usr/share/nginx/html
@@ -52,4 +67,3 @@ spec:
         - name: html-volume
           persistentVolumeClaim:
             claimName: {{ include "nginx.fullname" . }}-pvc
-
